@@ -9,9 +9,6 @@ if __name__ == "__main__":
 		except:
 			temperature = ""
 
-		print("data: ")
-		print(temperature)
-
 		if "127" in temperature:
 			requests.get("http://192.168.1.153:5000/set_lcd_text?text=Fire! Open moto. Call 112!")
 			status = requests.get("http://192.168.1.153:5000/status_motor")
@@ -19,7 +16,7 @@ if __name__ == "__main__":
 				status = status.text
 			except:
 				status = "open"
-			print(status)
+
 			if "close" in status.lower():
 				requests.get("http://192.168.1.153:5000/turn_motor")
 		elif "-" in temperature:
