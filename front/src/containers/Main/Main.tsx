@@ -133,16 +133,16 @@ class Main extends React.Component<IProps, IState> {
                             <Card title={'Шлагбаум'} style={{width: '100%'}}>
                                 <p>Шлагбаум { motorValue ? 'открыт' : 'закрыт' }</p>
 
-                                <Button onClick={() => this.setState({motorValue: !motorValue})}>{ motorValue ? 'Закрыть' : 'Открыть' }</Button>
-                                <Button onClick={() => alert(1)}>Статус шлагбаума</Button>
+                                <Button onClick={this.turnMotor}>{ motorValue ? 'Закрыть' : 'Открыть' }</Button>
+                                <Button onClick={this.getMotorStatus}>Статус шлагбаума</Button>
                             </Card>
                         </Col>
 
                         <Col span={8}>
                             <Card title={'Температура'} style={{width: '100%'}}>
-                                <Button onClick={() => alert(1)}>Текущая температура</Button>
-                                <Button icon={ 'up' } onClick={() => alert(1)}>температуру</Button>
-                                <Button icon={ 'down' } onClick={() => alert(1)}>температуру</Button>
+                                <Button onClick={this.getTemp}>Текущая температура</Button>
+                                <Button icon={ 'up' } onClick={this.changeTemp(true)}>температуру</Button>
+                                <Button icon={ 'down' } onClick={this.changeTemp(false)}>температуру</Button>
                             </Card>
                         </Col>
                     </Row>
@@ -189,6 +189,27 @@ class Main extends React.Component<IProps, IState> {
         .get('/get_lcd_text')
         .then((response: Response) => response.text())
         .then((text: string) => notification.success({message: 'Текст', description: text}));
+
+    private turnMotor = () => transport.get('/turn_motor')
+        .then((response: Response) => response.text())
+        .then((text: string) => this.setState({motorValue: text.toLowerCase().includes('open')}));
+
+    private getMotorStatus = () => transport.get('/status_motor')
+        .then((response: Response) => response.text())
+        .then((text: string) => {
+            const motorValue: boolean = text.toLowerCase().includes('open');
+            this.setState({motorValue});
+            notification.success({message: 'Шлагбаум', description: text});
+        });
+
+    private getTemp = () => transport
+        .get('/get_temperature')
+        .then((response: Response) => response.text())
+        .then((text: string) => notification.success({message: 'Температура', description: text}));
+
+    private changeTemp = (isUp: boolean) => () => transport
+        .get(`/change_temperature?type=${isUp ? 'up' : 'low'}`)
+        .then(() => notification.success({message: 'Температура', description: isUp ? 'Увеличена' : 'Уменьшена'}));
 }
 
 export default Form.create()(Main);
