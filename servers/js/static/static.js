@@ -8,9 +8,8 @@ const host = 'http://192.168.1.153:5000';
 const fetchOptions = {method: 'GET', timeout: 6000};
 
 app.get('/set_lcd_text', function (req, res) {
-    const {text = ''} = req.query;
-    fetch(`${host}/set_lcd_text?text=${text}`, fetchOptions)
-        .then(response => res.send(text))
+    fetch(`${host}/set_lcd_text?text=${req.query.text}`, fetchOptions)
+        .then(response => res.send(req.query.text))
         .catch(() => res.send(''));
 });
 
