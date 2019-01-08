@@ -193,6 +193,7 @@ class Main extends React.Component<IProps, IState> {
     private turnMotor = () => transport.get('/turn_motor')
         .then((response: Response) => response.text())
         .then((text: string) => {
+            console.log(text);
             notification.success({message: 'Шлагбаум', description: this.state.motorValue ? 'Закрыт' : 'Открыт'});
             this.setState({motorValue: text.toLowerCase().includes('open')});
         });

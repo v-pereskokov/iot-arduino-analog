@@ -30,7 +30,7 @@ app.get('/clear_lcd', function (req, res) {
 app.get('/get_lcd_text', function (req, res) {
     fetch(host + '/get_lcd_text', fetchOptions)
         .then(function(response) {
-            response.text();
+            return response.text();
         })
         .then(function (text) {
             res.send(text);
@@ -53,7 +53,7 @@ app.get('/is_ok_lcd', function (req, res) {
 app.get('/turn_motor', function (req, res) {
     fetch(host + '/turn_motor', fetchOptions)
         .then(function (response) {
-            response.text();
+            return response.text();
         })
         .then(function (text) {
             res.send(text);
@@ -66,7 +66,7 @@ app.get('/turn_motor', function (req, res) {
 app.get('/status_motor', function (req, res) {
     fetch(host + '/status_motor', fetchOptions)
         .then(function (response) {
-            response.text();
+            return response.text();
         })
         .then(function (text) {
             res.send(text);
@@ -89,7 +89,7 @@ app.get('/is_ok_motor', function (req, res) {
 app.get('/get_temperature', function (req, res) {
     fetch(host + '/status_motor', fetchOptions)
         .then(function (response) {
-            response.text();
+            return response.text();
         })
         .then(function (text) {
             res.send(text);
@@ -102,7 +102,7 @@ app.get('/get_temperature', function (req, res) {
 app.get('/change_temperature', function (req, res) {
     fetch(host + '/change_temperature?type=' + req.query.type, fetchOptions)
         .then(function (response) {
-            response.text();
+            return response.text();
         })
         .then(function (text) {
             res.send(text);
