@@ -30,11 +30,11 @@ module.exports = merge(common, {
         proxy: [
             {
                 context: ['/'],
-                target: 'http://127.0.0.1:4000/',
+                target: 'http://192.168.1.153:5000/',
                 pathRewrite: {'^/': '/'},
                 secure: false,
                 onProxyReq: (proxyReq, req, res) => {
-                    proxyReq.setHeader('Host', '127.0.0.1');
+                    proxyReq.setHeader('Host', '192.168.1.153');
                 }
             }
         ]
