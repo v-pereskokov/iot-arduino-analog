@@ -54,7 +54,6 @@ dkms.conf
 .module-cache
 *.log*
 build
-dist
 .DS_Store
 node_modules/
 src/built/
