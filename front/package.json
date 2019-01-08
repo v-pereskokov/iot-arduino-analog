@@ -8,8 +8,8 @@
     "precommit:install": "./node_modules/precommit/bin/cli.js install",
     "precommit:remove": "./node_modules/precommit/bin/cli.js remove",
     "precommit": "npm run lint",
-    "lint": "./node_modules/.bin/tslint -c front/tslint.json --fix 'front/src/**/*?(.*).ts?(x)'",
-    "test": "mocha -r ts-node/register front/src/**/*.spec.ts",
+    "lint": "./node_modules/.bin/tslint -c tslint.json --fix 'src/**/*?(.*).ts?(x)'",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "run": "cross-env NODE_ENV=development webpack-dev-server --hot --inline --progress --color --devtool cheap-module-source-map --config webpack.dev.config.js --https",
     "build:prod": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --progress --colors --config webpack.config.js",
     "build:testing": "cross-env NODE_ENV=testing ./node_modules/.bin/webpack --progress --colors --config webpack.config.js"
@@ -96,7 +96,7 @@
     "webpack-merge": "4.1.2"
   },
   "dependencies": {
-    "antd": "^3.4.3",
+    "antd": "3.4.3",
     "file-saver": "1.3.8",
     "html-react-parser": "^0.4.7",
     "jsondiffpatch": "^0.3.11",
