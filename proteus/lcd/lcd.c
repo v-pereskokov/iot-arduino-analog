@@ -17,67 +17,71 @@ sbit LCD_D7_Direction at TRISB5_bit;
 char symbol;
 char previous_symbol;
 char text[64];
+char message[64];
 
-int is_move = 0;
-int i = 0; // Current text index
+int i = 0;
 
-int is_overflow_text()
+void reset_text(char *text)
 {
-  return i >= 63 ? 1 : 0;
-}
-
-void reset_text()
-{
+  int l, m;
+  text[0] = 0;
   memset(text, 0, 64);
   i = 0;
 }
 
-void show_text()
+void send_message(char *message)
 {
-  int k = 0;
-
-  for (k; k < (i < 15) ? 19 : i; ++k)
-  {
-    Lcd_Out(1, 1, text);
-    Lcd_Cmd(_LCD_SHIFT_RIGHT);
-    Delay_ms(500);
-  }
-
-  Lcd_Cmd(_LCD_RETURN_HOME);
+  UART1_Write_Text(message);
+  UART1_Write_Text("\r\n");
 }
 
-void read_text()
+void show_text(char *message)
+{
+  Lcd_Cmd(_LCD_CLEAR);
+  Lcd_Out(1, 1, message);
+}
+
+void exe_command()
+{
+  int j = 1, k = 0;
+  
+  for (j; j < i; ++j, ++k)
+  {
+    message[k] = text[j];
+  }
+  
+  if (text[0] == 's')
+  {
+    show_text(message);
+    reset_text(message);
+  }
+  else if (text[0] == 'h')
+  {
+    Lcd_Cmd(_LCD_CLEAR);
+    reset_text(text);
+    reset_text(message);
+  }
+}
+
+void read_command() 
 {
   if (UART1_Data_Ready())
   {
     previous_symbol = symbol;
     symbol = UART1_Read();
-
-    if (strcmp("move", text) == 0)
-    {
-      is_move = (is_move == 1) ? 0 : 1;
-      return;
-    }
-
-    if (is_overflow_text())
-    {
-      show_text();
-      return;
-    }
-
-    if (symbol == '#')
-    {
-      show_text();
+    
+    if (symbol != '#') {
+      if (previous_symbol == '#')
+      {
+        reset_text(text);
+      }
+    
+      text[i] = symbol;
+      ++i;
     }
     else
     {
-      if (previous_symbol == '#')
-      {
-        reset_text();
-      }
-      text[i] = symbol;
-      ++i;
-      Lcd_Cmd(_LCD_CLEAR);
+      exe_command();
     }
   }
 }
@@ -91,6 +95,6 @@ void main()
 
   while (1)
   {
-    read_text();
+    read_command();
   }
 }
