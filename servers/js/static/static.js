@@ -87,7 +87,7 @@ app.get('/is_ok_motor', function (req, res) {
 });
 
 app.get('/get_temperature', function (req, res) {
-    fetch(host + '/status_motor', fetchOptions)
+    fetch(host + '/get_temperature', fetchOptions)
         .then(function (response) {
             return response.text();
         })
