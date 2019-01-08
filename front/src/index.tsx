@@ -1,25 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import history from './middleware/history';
 
-import { configureStore } from './store';
-import { routes } from './routes';
-
-import App from './containers/App/App';
+import Main from './containers/Main/Main';
 
 import './statics/scss/main.scss';
 
-const store = configureStore();
-
 ReactDOM.render(
-  <Provider store={ store }>
-    <Router history={ history }>
-      <div className='app'>
-        <App routes={ routes } />
-      </div>
-    </Router>
-  </Provider>,
+  <div className='app'>
+    <Main />
+  </div>,
   document.getElementById('root'),
 );
