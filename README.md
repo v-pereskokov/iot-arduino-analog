@@ -120,3 +120,5 @@
 ## Пример использования
 
 Видео примера использования представлено ниже:
+
+[![Example video](https://i.ytimg.com/vi/f2CLp7CoC78/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDR4A0J4nsLL0Ap6QTlj3g25xlpNA)](https://www.youtube.com/watch?v=f2CLp7CoC78)
